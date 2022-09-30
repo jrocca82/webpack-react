@@ -1,14 +1,23 @@
 const webpack = require("webpack");
+const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const port = process.env.PORT || 3000;
 
+const VENDOR_LIBS = ["react", "react-dom", "react-router-dom"];
+
+const APP_DIR = path.join(__dirname, "src");
+const BUILD_DIR = path.join(__dirname, "dist");
+
 module.exports = {
 	mode: "development",
-	entry: "./src/index.js",
-  watch: true,
+	entry: {
+		main: APP_DIR + "/index.js",
+		vendors: VENDOR_LIBS,
+	},
 	output: {
-		filename: "dist/app.bundle.js",
+		path: BUILD_DIR,
+		filename: "[name].[chunkhash].js",
 	},
 	devtool: "inline-source-map",
 	module: {
@@ -16,7 +25,15 @@ module.exports = {
 			{
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
-				use: ["babel-loader"],
+				loader: "babel-loader",
+				options: {
+					babelrc: false,
+					presets: [
+						["@babel/preset-env", { modules: false }],
+						["@babel/preset-react", { runtime: "automatic" }],
+					],
+					plugins: ["@babel/plugin-proposal-class-properties", "syntax-dynamic-import"]
+				},
 			},
 			{
 				test: /\.css$/,
@@ -33,7 +50,7 @@ module.exports = {
 					},
 				],
 			},
-            {
+			{
 				test: /\.(jpe?g|png|gif|svg)$/i,
 				use: ["file-loader"],
 			},
@@ -44,11 +61,22 @@ module.exports = {
 			template: "public/index.html",
 			favicon: "public/favicon.ico",
 		}),
+		new webpack.optimize.SplitChunksPlugin({
+			cacheGroups: {
+				shared: {
+					test: /node_modules[\\/](?!axios)/,
+					name: "shared",
+					enforce: true,
+					chunks: "all",
+				},
+			},
+		}),
 	],
 	devServer: {
 		host: "localhost",
 		port: port,
 		historyApiFallback: true,
-		open: true
+		open: true,
+		compress: true,
 	},
 };
