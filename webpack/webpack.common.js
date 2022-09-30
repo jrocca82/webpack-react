@@ -2,15 +2,12 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const port = process.env.PORT || 3000;
-
 const VENDOR_LIBS = ["react", "react-dom", "react-router-dom"];
 
-const APP_DIR = path.join(__dirname, "src");
-const BUILD_DIR = path.join(__dirname, "dist");
+const APP_DIR = path.join(__dirname, "../src");
+const BUILD_DIR = path.join(__dirname, "../dist");
 
 module.exports = {
-	mode: "development",
 	entry: {
 		main: APP_DIR + "/index.js",
 		vendors: VENDOR_LIBS,
@@ -19,7 +16,6 @@ module.exports = {
 		path: BUILD_DIR,
 		filename: "[name].[chunkhash].js",
 	},
-	devtool: "inline-source-map",
 	module: {
 		rules: [
 			{
@@ -72,15 +68,5 @@ module.exports = {
 			},
 		}),
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.DefinePlugin({
-			"process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
-		})
 	],
-	devServer: {
-		host: "localhost",
-		port: port,
-		historyApiFallback: true,
-		open: true,
-		compress: true,
-	},
 };
