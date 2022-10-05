@@ -21,6 +21,7 @@
   "scripts": {
     "predeploy": "yarn build",
     "deploy": "gh-pages -d dist",
+    "start": "react-scripts start",
     "build": "yarn clean && webpack --config webpack/webpack.prod.js",
     "dev": "webpack-dev-server --config webpack/webpack.dev.js --open",
     "clean": "rimraf dist",

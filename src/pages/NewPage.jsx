@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const NewPage = () => {
-	const [loading, isLoading] = useState(false);
 
 	return (
 		<div>
