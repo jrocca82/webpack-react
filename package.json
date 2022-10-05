@@ -20,7 +20,7 @@
     "webpack-merge": "^5.8.0"
   },
   "scripts": {
-    "predeploy": "npx run build",
+    "predeploy": "yarn build",
     "deploy": "gh-pages -d build",
     "build": "yarn clean && webpack --config webpack/webpack.prod.js",
     "dev": "webpack-dev-server --config webpack/webpack.dev.js --open",

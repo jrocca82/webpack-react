@@ -54,7 +54,7 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: "./docs/index.html",
+			template: "public/index.html",
 			favicon: "public/favicon.ico",
 		}),
 		new webpack.optimize.SplitChunksPlugin({
