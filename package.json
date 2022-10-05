@@ -20,7 +20,8 @@
   "scripts": {
     "build": "yarn clean && webpack --config webpack/webpack.prod.js",
     "dev": "webpack-dev-server --config webpack/webpack.dev.js --open",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "deploy-gh": "yarn build && git subtree push --prefix dist origin gh-pages"
   },
   "eslintConfig": {
     "extends": [
